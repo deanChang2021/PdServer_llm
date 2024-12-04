@@ -1,7 +1,10 @@
 import asyncio
 
 import aiofiles
+import os
 
+current_directory = os.getcwd()
+print(f"当前工作目录: {current_directory}")
 
 async def loads_banned_words():
     prompt = set()

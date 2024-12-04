@@ -35,8 +35,9 @@ def getIni(section, key) -> int:
     if not os.path.exists(configpath):
         # 文件不存在，创建文件
         raise FileNotFoundError
-    else:
-        logging.info("find ini file")
+
+
+    #logging.info("find ini file")
 
     conf = IniConfig(configpath)
     val = conf.get_value(section, key)

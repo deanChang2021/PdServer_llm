@@ -1,11 +1,14 @@
 from typing import Optional, List
 from pydantic import BaseModel
 
-class TriggerOcrIn(BaseModel):
+from entity.entity import Information, InformationDetail
 
+
+class TriggerOcrIn(BaseModel):
     fileName : str
     taskType : Optional[str]
     model : Optional[int] # 1 normal/ 2 fast
+
 
 class TriggerOcrResponse(BaseModel):
     message: str = "success"
@@ -20,21 +23,54 @@ class User(BaseModel):
     user: str
     pwd: str
 
+
 class UserLoginResponse(BaseModel):
     message: str = "success"
     code: int = 200
-    user: str
-    id: int
-    token: str
-    nickname: str
-    headUrl: str
+    user: str=""
+    id: int=0
+    token: str=""
+    nickname: str=""
+    headUrl: str=""
+
+class userInfo(BaseModel):
+    userName: str
+    id: str
 
 class TriggerImagineIn(BaseModel):
-
     prompt: str
     picurl: Optional[str]
     userId: str
 
+
+class TriggerInformationListIn(BaseModel):
+        author: str
+        classify: Optional[str]
+        pageNum: int
+        pageSize: int
+
+
+class TriggerInformationIn(BaseModel):
+    id: str =""
+    author: str
+    classify: str
+    content: str
+
+    level: str
+    state: str
+    tags: str
+    title: str
+
+class TriggerQrCodeIn(BaseModel):
+    id: str = ""
+    author: str
+    classify: str
+    content: str
+
+    level: str
+    state: str
+    tags: str
+    title: str
 
 class TriggerUVIn(BaseModel):
     index: int
@@ -86,6 +122,17 @@ class TriggerResponse(BaseModel):
     triggerId: str = ""
     triggerType: str = ""
     waitLen: int = 0
+
+
+class TriggerListOut(BaseModel):
+    message: str = "success"
+    code: int = 200
+    data: List[Information] = []
+
+class TriggerDetailOut(BaseModel):
+    message: str = "success"
+    code: int = 200
+    data: InformationDetail
 
 class ReleaseResponse(BaseModel):
     message: str = "success"

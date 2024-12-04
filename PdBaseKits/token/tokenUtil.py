@@ -39,9 +39,12 @@ def decodeAccessToken(token: str):
 def checkToken(token: str):
     payload = decodeAccessToken(token)
     ##{'userName': 'zzz', 'id': 12, 'exp': 1724729839}
+    # print("=========payload")
+    # print(type(payload))
+
+    return {"userName":payload["userName"], "id" : payload["id"]}
 
 
 # 鉴权依赖项
 async def authenticate(token: str = Header(..., alias="Authorization")):
-    checkToken(token)
-    return token
+    return checkToken(token)

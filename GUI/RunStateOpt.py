@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QGridLayout, QTextBrow
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
 
 from GUI import SERVER_PORT
+from PdBaseKits.NetUtil import POST
 from PdBaseKits.RedisLoader import RedisCntType
 from conf.logger.logType import LogType
 from conf.logger.logQueue import logQueue, Source
@@ -59,7 +60,7 @@ class RunStateOpt:
     def createChart(self, parent):
         print("run state create chart")
 
-        logging.info("创建个股跟踪成功")
+        logging.info("创建任务运行界面成功")
         self.pWind = parent
         # 外层容器
         self.gggzBoxShow = QWidget()
@@ -83,9 +84,9 @@ class RunStateOpt:
 
         introQl = QLabel(
             "请首先完成配置，然后启动服务")
-        refreshBtn = QPushButton("启动服务")
-        refreshBtn.clicked.connect(lambda: self.__startServerFunc(parent))
-        refreshBtn.setMaximumWidth(100)
+        self.refreshBtn = QPushButton("启动服务")
+        self.refreshBtn.clicked.connect(lambda: self.__startServerFunc(parent))
+        self.refreshBtn.setMaximumWidth(100)
 
         self.countQl = QLabel(
             "业务完成数量：")
@@ -95,7 +96,7 @@ class RunStateOpt:
         self.poemCntQl.setStyleSheet("background: #333333; color:#fff")
         self.errorCntQl = QLabel("异常数量：0")
         self.errorCntQl.setStyleSheet("background: #333333; color:#fff")
-        tLayout.addWidget(refreshBtn, 0, 0, 1, 1)
+        tLayout.addWidget(self.refreshBtn, 0, 0, 1, 1)
         tLayout.addWidget(introQl, 0, 1, 1, 2)
 
         tLayout.addWidget(self.countQl, 1, 0, 1, 1)
@@ -162,6 +163,7 @@ class RunStateOpt:
         self.serverThr.start()
 
         logQueue.push("saluton mode!Server Start succ", LogType.info)
+        self.refreshBtn.setDisabled(True)
 
 
 

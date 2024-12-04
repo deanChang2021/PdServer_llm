@@ -31,19 +31,24 @@ def writeImg2Local(imageUrl:str, path:str, imageName:str):
 ###
 ### 图片压缩方法。按固定比例压缩。
 ###
-def compressImg(inputImagePath, outputImagePath):
+def compressImg(inputImagePath, outputImagePath, width):
     image = Image.open(inputImagePath)
 
 
     tup = image.size
     div = tup[0]/tup[1]
 
-    newWidth = 400
-    newHeight = int(round(newWidth/div));
+    try:
+        newWidth = width
+        newHeight = int(round(newWidth/div));
 
-    newImage = image.resize((newWidth,newHeight))
-    newImage.save(outputImagePath)
-    logging.info("compress image output file path["+outputImagePath+"]")
+        newImage = image.resize((newWidth,newHeight))
+        newImage.save(outputImagePath)
+        logging.info("compress image output file path["+outputImagePath+"]")
+    except Exception as e:
+        return str(e)
+
+    return True
 
 
 

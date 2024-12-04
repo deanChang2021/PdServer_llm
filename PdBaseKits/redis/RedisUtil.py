@@ -41,7 +41,7 @@ class RedisUtils:
         :param db: 数据库
         :param password: 密码
         """
-        pool = redis.ConnectionPool(host=host, port=port, db=db, password=password, max_connections=maxConn)
+        pool = redis.ConnectionPool(host=host, port=port, db=db, password=password, max_connections=maxConn, decode_responses=True)
         self.rdb = redis.Redis(connection_pool=pool, port=port, decode_responses=True)
 
         self.ListLeft = 0

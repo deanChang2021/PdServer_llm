@@ -1,4 +1,5 @@
 import hashlib
+import logging
 import os
 import string
 import sys
@@ -14,17 +15,21 @@ def getSys() -> str:
 
 def getSaveUploadFilePath():
     if getSys() == "win":
-        path = "c:/portunid/task/image/"
+        path = "c:/portunid/task/upload/image/"
     else:
         path = "/Users/admin/portunid/image/"
 
     if not os.path.exists(path):
-        os.mkdir(path)
+        try:
+            logging.info("mkdir :" + path)
+            os.makedirs(path)
+        except Exception as e:
+            logging.info("mkdir error: " +str(e))
 
     return path
 
 
-def nonceId():
+def nonceId()->str:
     """生成唯一的 19 位数字"""
     int1 = int(hashlib.sha256(str(time.time()).encode("utf-8")).hexdigest(), 16) % 10 ** 10
     int2 = int(hashlib.sha256(str(time.time()).encode("utf-8")).hexdigest(), 16) % 9 ** 9
